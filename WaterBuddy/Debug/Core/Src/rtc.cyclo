@@ -1,0 +1,9 @@
+../Core/Src/rtc.c:30:6:MX_RTC_Init	7
+../Core/Src/rtc.c:133:6:HAL_RTC_MspInit	3
+../Core/Src/rtc.c:162:6:HAL_RTC_MspDeInit	2
+../Core/Src/rtc.c:185:6:set_wakeup_timer_minutes	3
+../Core/Src/rtc.c:200:6:set_wakeup_timer_seconds	2
+../Core/Src/rtc.c:211:6:stop_wakeup_timer	1
+../Core/Src/rtc.c:216:9:get_current_hour	1
+../Core/Src/rtc.c:227:9:is_day_time	3
+../Core/Src/rtc.c:232:9:get_current_minute	1

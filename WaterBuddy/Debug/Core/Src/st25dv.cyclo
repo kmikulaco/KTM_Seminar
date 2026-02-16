@@ -1,0 +1,7 @@
+../Core/Src/st25dv.c:29:19:ST25DV_Init	3
+../Core/Src/st25dv.c:52:19:ST25DV_WriteBytes	9
+../Core/Src/st25dv.c:93:19:ST25DV_ReadBytes	5
+../Core/Src/st25dv.c:119:19:ST25DV_WaitReady	4
+../Core/Src/st25dv.c:141:19:ST25DV_WriteNDEFText	15
+../Core/Src/st25dv.c:250:6:ST25DV_SendCasaCount	1
+../Core/Src/st25dv.c:266:26:st25dv_write_chunk	3
