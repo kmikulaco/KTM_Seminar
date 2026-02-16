@@ -76,7 +76,7 @@ uint8_t current_hour = 12;    // Default: 12 sati (podne)
 uint8_t sleep_start_hour = 22; // Default: 22h - 6h = noćni period (8h spavanja)
 uint8_t sleep_end_hour = 6;    // Default: 6h ujutro
 
-// ⭐⭐ EXTERN FUNKCIJE IZ rtc.c ⭐⭐
+// EXTERN FUNKCIJE IZ rtc.c
 extern void set_wakeup_timer_minutes(uint32_t minutes);
 extern void set_wakeup_timer_seconds(uint32_t seconds);
 extern void stop_wakeup_timer(void);
@@ -632,7 +632,7 @@ int main(void) {
 	// Faza 2: Odabir intervala
 	setup_interval_mode();
 
-	// ⭐ FAZA 3: Postavljanje trenutnog vremena (sati)
+	//  FAZA 3: Postavljanje trenutnog vremena (sati)
 	setup_current_time_mode();
 
 	// Potvrda setupa
@@ -671,7 +671,7 @@ int main(void) {
 		HAL_SuspendTick();
 		HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
 
-		// ⭐⭐ BUĐENJE ⭐⭐
+		//  BUĐENJE
 
 		// Provjera GPIO stanje ODMAH nakon budenja
 		gpo_state_immediate = HAL_GPIO_ReadPin(GPO_GPIO_Port, GPO_Pin);
@@ -699,7 +699,7 @@ int main(void) {
 			while (1) {
 				uint32_t current_time = HAL_GetTick();
 
-				// ⭐⭐ SAMO AKO ALARM NIJE PAUZIRAN ⭐⭐
+				//  SAMO AKO ALARM NIJE PAUZIRAN
 				if (!alarm_paused && !orange_fade_active && !waiting_for_btnR
 						&& !snooze_active) {
 					HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
@@ -730,7 +730,7 @@ int main(void) {
 					HAL_GPIO_WritePin(LPD_GPIO_Port, LPD_Pin, GPIO_PIN_RESET);
 				}
 				alarm_paused = 0;
-				// ⭐ ANIMACIJA NARANČASTOG FADE-OUT-a
+				//  ANIMACIJA NARANČASTOG FADE-OUT-a
 				if (orange_fade_active) {
 					alarm_paused = 1;  //
 					uint32_t fade_elapsed = current_time - orange_fade_start;
@@ -748,7 +748,7 @@ int main(void) {
 					}
 				}
 
-				// ⭐ PROVJERA L GUMBA
+				//  PROVJERA L GUMBA
 				if (HAL_GPIO_ReadPin(BTN_L_GPIO_Port, BTN_L_Pin)
 						== GPIO_PIN_SET) {
 					static uint32_t last_btnL_alarm_time = 0;
@@ -771,7 +771,7 @@ int main(void) {
 					}
 				}
 
-				// ⭐ PROVJERA TIMEOUTA ZA L+R
+				//  PROVJERA TIMEOUTA ZA L+R
 				if (waiting_for_btnR
 						&& (current_time - btnL_press_time > 1000)) {
 					waiting_for_btnR = 0;
@@ -795,7 +795,7 @@ int main(void) {
 					HAL_Delay(1000);
 				}
 
-				// ⭐ PROVJERA R GUMBA AKO JE L BIO PRITISNUT
+				// PROVJERA R GUMBA AKO JE L BIO PRITISNUT
 				if (waiting_for_btnR
 						&& HAL_GPIO_ReadPin(BTN_R_GPIO_Port, BTN_R_Pin)
 								== GPIO_PIN_SET) {
@@ -847,7 +847,7 @@ int main(void) {
 					}
 				}
 
-				// ⭐ PROVJERA SAMO R GUMBA ZA SNOOZE
+				//  PROVJERA SAMO R GUMBA ZA SNOOZE
 				if (!btnL_was_pressed
 						&& HAL_GPIO_ReadPin(BTN_R_GPIO_Port, BTN_R_Pin)
 								== GPIO_PIN_SET) {
@@ -899,7 +899,7 @@ int main(void) {
 					}
 				}
 
-				// ⭐ PROVJERA SAMO L GUMBA (bez R)
+				//  PROVJERA SAMO L GUMBA (bez R)
 				if (!waiting_for_btnR
 						&& HAL_GPIO_ReadPin(BTN_L_GPIO_Port, BTN_L_Pin)
 								== GPIO_PIN_SET) {
@@ -1331,8 +1331,7 @@ static void MX_NVIC_Init(void) {
 }
 
 /* USER CODE BEGIN 4 */
-// ⭐ NOVA ALARM A CALLBACK
-// ⭐ ALARM A CALLBACK - aktivira se kada je sat = 10 (bilo koja minuta)
+//  ALARM A CALLBACK - aktivira se kada je sat = 10 (bilo koja minuta)
 void HAL_RTC_AlarmAEventCallback(RTC_HandleTypeDef *hrtc) {
 
 	daily_alarm_count = 0;  // RESET dnevnog brojača!
@@ -1340,7 +1339,7 @@ void HAL_RTC_AlarmAEventCallback(RTC_HandleTypeDef *hrtc) {
 	rtc_wakeup_flag = 1;  // Označi buđenje
 }
 
-// ⭐ ALARM B CALLBACK
+//  ALARM B CALLBACK
 void HAL_RTCEx_AlarmBEventCallback(RTC_HandleTypeDef *hrtc) {
 
 	stop_wakeup_timer();    // Zaustavi intervale
